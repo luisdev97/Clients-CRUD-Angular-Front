@@ -10,7 +10,7 @@ import { RouterModule , Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: '/clients', pathMatch: 'full'},
-  { path: 'clientes', component: ClientsComponent}
+  { path: 'clients', component: ClientsComponent}
 ]
 
 
