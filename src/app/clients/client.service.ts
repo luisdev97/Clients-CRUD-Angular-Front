@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import clientList from './clients.json';
 import Client from 'src/models/client';
 import { of, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +15,8 @@ export class ClientService {
 
   getClients(): Observable<Client[]>{
     //El metodo get del objeto http siempre retornara un observable
-    return this.http.get<Client[]>(this.urlEndPoint);
+    let clients = this.http.get<Client[]>(this.urlEndPoint);
+    return clients;
   }
   
 }

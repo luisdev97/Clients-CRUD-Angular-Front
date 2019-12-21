@@ -1,7 +1,7 @@
 class Client {
     id: number;
     name: string;
-    surName: string;
+    surname: string;
     createAt: string;
     email: string;
 }
