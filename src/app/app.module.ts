@@ -11,10 +11,11 @@ import { FormComponent } from './clients/form.component';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/clients', pathMatch: 'full'},
-  { path: 'clients', component: ClientsComponent},
-  { path: 'clients/form', component: FormComponent}
-]
+  { path: '', redirectTo: '/clients', pathMatch: 'full' },
+  { path: 'clients', component: ClientsComponent },
+  { path: 'clients/form', component: FormComponent },
+  { path: 'clients/form/:id', component: FormComponent }
+];
 
 
 @NgModule({

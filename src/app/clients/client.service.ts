@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Client from 'src/models/client';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -20,6 +20,11 @@ export class ClientService {
     return clients;
   }
 
+  getClient(id): Observable<Client>{
+    return this.http.get<Client>(`${this.urlEndPoint}/${id}`);
+  }
+
+n
   create(client: Client): Observable<Client>{
     let newClient = this.http.post<Client>(this.urlEndPoint, client, { headers: this.httpHeaders });
     return newClient;
