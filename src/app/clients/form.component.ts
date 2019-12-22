@@ -31,13 +31,22 @@ export class FormComponent implements OnInit {
      this.clientService.create(this.client).subscribe(
        client => {
         this.router.navigate(['/clients']);
-        swal.fire(
-          'Saved client',
-          `Client ${ client.name } successfully created`,
-          'success'
-        )
+        swal.fire('Saved client', `Client ${ client.name } successfully created`, 'success');
       }
      );
   }
+
+
+  public update(): void {
+    this.clientService.update(this.client).subscribe(
+      client => {
+        this.router.navigate(['/clients']);
+        swal.fire('Modified client', `Client ${ client.name } successfully modified`, 'success');
+      }
+    )
+  }
+
+
+
 
 }
