@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import Client from 'src/models/client';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { map, catchError } from 'rxjs/operators';
+import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 //{ providedIn: 'root' }
@@ -14,7 +16,7 @@ export class ClientService {
     headers: new HttpHeaders({ 'content-Type': 'application/json' })
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   
   getClients(): Observable<Client[]> {
@@ -25,24 +27,50 @@ export class ClientService {
 
 
   getClient(id): Observable<Client> {
-    return this.http.get<Client>(`${this.urlEndPoint}/${id}`);
+    return this.http.get<Client>(`${this.urlEndPoint}/${id}`).pipe(
+      catchError(e => {
+        this.router.navigate(['/clients']);
+        swal.fire(`Error removing the client with ID ${id}`, e.error.message , 'error');
+        console.log(e.error.message);
+        return throwError(e);
+      })
+    );
   }
 
 
   create(client: Client): Observable<Client> {
-    let newClient = this.http.post<Client>(this.urlEndPoint, client, this.httpHeaders);
-    return newClient;
+    let newClient = this.http.post<any>(this.urlEndPoint, client, this.httpHeaders);
+    return newClient.pipe(
+      map(response => response.client as Client), 
+      catchError(e => {
+        this.router.navigate(['/clients']);
+        swal.fire(e.error.message , e.error.preciseMessage , 'error');
+        return throwError(e);
+      })
+    );
   }
 
 
   update(client: Client): Observable<Client> {
-    let updatedClient = this.http.put<Client>(`${this.urlEndPoint}/${client.id}`, client, this.httpHeaders);
-    return updatedClient;
+    let updatedClient = this.http.put<any>(`${this.urlEndPoint}/${client.id}`, client, this.httpHeaders);
+    return updatedClient.pipe(
+      map(response => response.client as Client),
+      catchError(e  => {
+        swal.fire(`Error modifying the client with ID ${client.id}`, e.error.message , 'error');
+        return throwError(e);
+      })
+    );
   }
 
   delete(id: number): Observable<Client>{
-    console.log(`${this.urlEndPoint}/${id}`);
-    return this.http.delete<Client>(`${this.urlEndPoint}/${id}`, this.httpHeaders)
+    let removedClient = this.http.delete<Client>(`${this.urlEndPoint}/${id}`, this.httpHeaders);
+    return removedClient.pipe(
+      catchError(e => {
+        this.router.navigate(['/clients']);
+        swal.fire(`Error removing the client with ID ${id}`, e.error.message , 'error');
+        return throwError(e);
+      })
+    );
   }
 
 }

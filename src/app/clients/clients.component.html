@@ -13,7 +13,10 @@
     </div>
 
     <div id="listBox">
-    <table class="table table-bordered table-striped ">
+
+      <div *ngIf="clients?.length == 0" class="alert alert-info">CLient list is empty</div>
+
+    <table class="table table-bordered table-striped" *ngIf="clients?.length > 0">
       <thead>
         <tr>
           <th>ID</th>
