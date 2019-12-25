@@ -4,54 +4,128 @@
   </div>
 
   <div class="card-body">
-    <form>
 
-      <div class="form-group row">
-        <label for="name" class="col-form-label col-sm-2">Name</label>
-        <div class="col-sm-6">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="client.name"
-            name="name"
-          />
-        </div>
-      </div>
+    <form #clientForm="ngForm">
 
-      <div class="form-group row">
-        <label for="surname" class="col-form-label col-sm-2">Surname</label>
-        <div class="col-sm-6">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="client.surname"
-            name="surname"
-          />
-        </div>
-      </div>
+        <div class="form-group row">
 
-      <div class="form-group row">
-        <label for="email" class="col-form-label col-sm-2">Email</label>
-        <div class="col-sm-6">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="client.email"
-            name="email"
-          />
+            <label for="name" class="col-form-label col-sm-2">Name</label>
+
+            <div class="col-sm-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="client.name"
+                name="name"
+                required
+                minlength="4"
+                #inputName="ngModel"
+              />
+            </div>
+
+            <div class="alert alert-danger" *ngIf="inputName.invalid && (inputName.dirty || inputName.touched)">
+              
+                <div *ngIf="inputName.errors.required">
+                    Name is required
+                </div>
+      
+                <div *ngIf="inputName.errors.minlength">
+                  Name must have at least 4 letters
+                </div>
+      
+            </div>
+
         </div>
-      </div>
+
+
+        <div class="form-group row">
+
+            <label for="surname" class="col-form-label col-sm-2">Surname</label>
+
+            <div class="col-sm-6">
+    
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="client.surname"
+                name="surname"
+                required
+                #inputSurname="ngModel"
+              />
+            </div>
+    
+    
+            <div class="alert alert-danger" *ngIf="inputSurname.invalid && (inputSurname.dirty || inputSurname.touched)">
+              
+                <div *ngIf="inputSurname.errors.required">
+                    Surname is required
+                </div>
+    
+            </div>
+
+        </div>
+
+
+
+
+        <div class="form-group row">
+
+            <label for="email" class="col-form-label col-sm-2">Email</label>
+
+            <div class="col-sm-6">
+              <input
+                type="email"
+                class="form-control"
+                [(ngModel)]="client.email"
+                name="email"
+                required
+                #inputEmail="ngModel"
+              />
+            </div>
+    
+            <div class="alert alert-danger" *ngIf="inputEmail.invalid && (inputEmail.dirty || inputEmail.touched)">
+              
+                <div *ngIf="inputEmail.errors.required">
+                    Email is required
+                </div>
+    
+                <div *ngIf="inputEmail.errors.email">
+                    Invalid email format
+    
+                </div>
+    
+            </div>
+    
+        </div>
+        
+
+
+
+
 
       <div class="form-group-row">
           <div class="col-sm-6">
-              <button class="btn btn-primary" (click)="create()" *ngIf="!client.id else elseBlock">Create</button>
+              <button class="btn btn-primary" (click)="create()" *ngIf="!client.id else elseBlock" [disabled]="!clientForm.form.valid">Create</button>
               <ng-template #elseBlock>
-                  <button class="btn btn-primary" (click)="update()">Edit</button>  
+                  <button class="btn btn-primary" (click)="update()" [disabled]="!clientForm.form.valid">Edit</button>  
               </ng-template>
               
             </div>
       </div>
 
+
+
+
+
+        
+
+
+
+      
+
+
+
+    
 
     </form>
   </div>
