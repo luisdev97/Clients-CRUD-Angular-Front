@@ -43,7 +43,10 @@ export class ClientService {
     return newClient.pipe(
       map(response => response.client as Client), 
       catchError(e => {
-        this.router.navigate(['/clients']);
+
+        if( e.status === 400 )
+          return throwError(e);
+        
         swal.fire(e.error.message , e.error.preciseMessage , 'error');
         return throwError(e);
       })
@@ -56,6 +59,10 @@ export class ClientService {
     return updatedClient.pipe(
       map(response => response.client as Client),
       catchError(e  => {
+
+        if( e.status === 400 )
+          return throwError(e);
+
         swal.fire(`Error modifying the client with ID ${client.id}`, e.error.message , 'error');
         return throwError(e);
       })
@@ -66,7 +73,9 @@ export class ClientService {
     let removedClient = this.http.delete<Client>(`${this.urlEndPoint}/${id}`, this.httpHeaders);
     return removedClient.pipe(
       catchError(e => {
-        this.router.navigate(['/clients']);
+
+       // if( e.status === 400 )
+         // return throwError(e)
         swal.fire(`Error removing the client with ID ${id}`, e.error.message , 'error');
         return throwError(e);
       })

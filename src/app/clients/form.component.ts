@@ -12,6 +12,7 @@ export class FormComponent implements OnInit {
 
   private client: Client = new Client();
   private title: string = "Create Client";
+  private errors: string[];
 
   constructor(private clientService: ClientService, private router: Router, private activateRoute: ActivatedRoute) { }
 
@@ -30,8 +31,12 @@ export class FormComponent implements OnInit {
   public create(): void {
      this.clientService.create(this.client).subscribe(
        client => {
-        this.router.navigate(['/clients']);
-        swal.fire('Saved client', `Client ${ client.name } successfully created`, 'success');
+        //this.router.navigate(['/clients']);
+        //swal.fire('Saved client', `Client ${ client.name } successfully created`, 'success');
+      },
+      e => {
+        this.errors = e.error.errors as string[];
+        console.log(this.errors);
       }
      );
   }
@@ -42,6 +47,9 @@ export class FormComponent implements OnInit {
       client => {
         this.router.navigate(['/clients']);
         swal.fire('Modified client', `Client ${ client.name } successfully modified`, 'success');
+      },
+      e => {
+        this.errors = e.error.errors as string[];
       }
     )
   }

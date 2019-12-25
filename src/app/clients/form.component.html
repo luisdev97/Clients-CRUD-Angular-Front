@@ -1,3 +1,10 @@
+<ul *ngIf="errors?.length > 0" class="alert alert-danger">
+  <li *ngFor="let error of errors">
+    {{ error }}
+  </li>
+</ul>
+
+
 <div class="card bg-dark text-white">
   <div class="card-header">
     {{ title }}
@@ -16,11 +23,9 @@
                 type="text"
                 class="form-control"
                 [(ngModel)]="client.name"
-                name="name"
-                required
-                minlength="4"
+                name="name" 
                 #inputName="ngModel"
-              />
+              /> <!-- required minlength="4" -->
             </div>
 
             <div class="alert alert-danger" *ngIf="inputName.invalid && (inputName.dirty || inputName.touched)">
@@ -49,9 +54,8 @@
                 class="form-control"
                 [(ngModel)]="client.surname"
                 name="surname"
-                required
                 #inputSurname="ngModel"
-              />
+              /> <!-- required -->
             </div>
     
     
@@ -78,9 +82,8 @@
                 class="form-control"
                 [(ngModel)]="client.email"
                 name="email"
-                required
                 #inputEmail="ngModel"
-              />
+              /> <!-- required -->
             </div>
     
             <div class="alert alert-danger" *ngIf="inputEmail.invalid && (inputEmail.dirty || inputEmail.touched)">
@@ -104,7 +107,9 @@
 
 
       <div class="form-group-row">
+
           <div class="col-sm-6">
+            
               <button class="btn btn-primary" (click)="create()" *ngIf="!client.id else elseBlock" [disabled]="!clientForm.form.valid">Create</button>
               <ng-template #elseBlock>
                   <button class="btn btn-primary" (click)="update()" [disabled]="!clientForm.form.valid">Edit</button>  
@@ -112,16 +117,6 @@
               
             </div>
       </div>
-
-
-
-
-
-        
-
-
-
-      
 
 
 
