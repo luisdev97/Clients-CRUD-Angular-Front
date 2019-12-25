@@ -9,6 +9,11 @@ import { RouterModule , Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './clients/form.component';
 import { FormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+
+
+registerLocaleData(localeEn, 'en');
 
 const routes: Routes = [
   { path: '', redirectTo: '/clients', pathMatch: 'full' },

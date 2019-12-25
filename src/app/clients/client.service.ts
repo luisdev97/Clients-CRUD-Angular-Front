@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { formatDate } from '@angular/common';
 import Client from 'src/models/client';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert2';
@@ -21,8 +22,17 @@ export class ClientService {
   
   getClients(): Observable<Client[]> {
     //El metodo get del objeto http siempre retornara un observable
-    let clients = this.http.get<Client[]>(this.urlEndPoint);
-    return clients;
+    let observable = this.http.get<Client[]>(this.urlEndPoint);
+    return observable.pipe(
+      map(clients => {
+        clients.map(client => {
+          client.name = client.name.toUpperCase();
+          //client.createAt = formatDate(client.createAt, 'longDate','en');
+          return client;
+        });
+        return clients;
+      })
+    );
   }
 
 
@@ -54,6 +64,7 @@ export class ClientService {
   }
 
 
+
   update(client: Client): Observable<Client> {
     let updatedClient = this.http.put<any>(`${this.urlEndPoint}/${client.id}`, client, this.httpHeaders);
     return updatedClient.pipe(
@@ -68,6 +79,8 @@ export class ClientService {
       })
     );
   }
+
+
 
   delete(id: number): Observable<Client>{
     let removedClient = this.http.delete<Client>(`${this.urlEndPoint}/${id}`, this.httpHeaders);
