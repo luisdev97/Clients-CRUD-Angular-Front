@@ -22,6 +22,7 @@ export class ClientService {
   
   getClients(page: number = 0): Observable<any> {
     //El metodo get del objeto http siempre retornara un observable
+    console.log(page);
     let observable = this.http.get(this.urlEndPoint + "/page/" + page);
     return observable.pipe(
       tap( (response: any) => {
