@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import Client from 'src/models/client';
 import { Observable, throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -20,17 +20,22 @@ export class ClientService {
   constructor(private http: HttpClient, private router: Router) { }
 
   
-  getClients(): Observable<Client[]> {
+  getClients(page: number = 0): Observable<any> {
     //El metodo get del objeto http siempre retornara un observable
-    let observable = this.http.get<Client[]>(this.urlEndPoint);
+    let observable = this.http.get(this.urlEndPoint + "/page/" + page);
     return observable.pipe(
-      map(clients => {
-        clients.map(client => {
+      tap( (response: any) => {
+        (response.content as Client[]).forEach( c => {
+          console.log(c);
+        })
+      }),
+      map((response : any)=> {
+        (response.content as Client[]).map(client => {
           client.name = client.name.toUpperCase();
           //client.createAt = formatDate(client.createAt, 'longDate','en');
           return client;
         });
-        return clients;
+        return response;
       })
     );
   }

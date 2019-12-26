@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
 import Client from '../../models/client';
 import { ClientService } from './client.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'Clients',
@@ -19,7 +20,7 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit() {
     this.clientService.getClients().subscribe(
-      clients => this.clients = clients
+      response => this.clients = response.content as Array<Client>
     );
   }
 
