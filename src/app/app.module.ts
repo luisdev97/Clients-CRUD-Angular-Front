@@ -11,12 +11,14 @@ import { FormComponent } from './clients/form.component';
 import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 
 registerLocaleData(localeEn, 'en');
 
 const routes: Routes = [
   { path: '', redirectTo: '/clients', pathMatch: 'full' },
+  { path: 'home' , redirectTo: '/clients' , pathMatch: 'full' },
   { path: 'clients', component: ClientsComponent },
   { path: 'clients/page/:page', component: ClientsComponent },
   { path: 'clients/form', component: FormComponent },
@@ -30,7 +32,8 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     ClientsComponent,
-    FormComponent
+    FormComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

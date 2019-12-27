@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ClientsComponent implements OnInit {
 
   clients: Array<Client>;
+  public paginator: any;
 
   constructor(private clientService: ClientService, private activatedRoute: ActivatedRoute ) {
   
@@ -24,7 +25,10 @@ export class ClientsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe( params => {
       let page: number = Number(params.get('page'));
       this.clientService.getClients(page).subscribe(
-        response => this.clients = response.content as Array<Client>
+        response =>{
+          this.clients = response.content as Array<Client>
+          this.paginator = response;
+        } 
       )
     });
 
