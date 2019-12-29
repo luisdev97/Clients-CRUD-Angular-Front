@@ -4,6 +4,7 @@ class Client {
     surname: string;
     createAt: string;
     email: string;
+    img: string;
 }
 
 export default Client;

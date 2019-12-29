@@ -1,0 +1,13 @@
+<div class="card bg-dark text-white">
+    <div class="card-header">
+      {{ title }}
+    </div>
+  
+    <div class="card-body">
+            
+      <div class="upload-btn-wrapper">
+        <button class="btn">Upload a image</button>
+        <input (change)="selectImage($event)" type="file" name="imgSelected"/>
+      </div>
+
+</div>
