@@ -29,18 +29,23 @@ export class ClientsDetailComponent implements OnInit {
 
   selectImage(event){
     this.imgSelected = event.target.files[0];
-    this.uploadImage();
+
+    if(this.imgSelected.type.indexOf('image') < 0)
+      swal.fire('Error Upload', 'The file must be an image', 'error');
+    else
+      this.uploadImage();
+      
   }
 
 
   uploadImage(){
-    console.log('subiendo');
-    this.ClientService.uploadImage(this.imgSelected, this.client.id).subscribe(
-      client => {
-        this.client = client;
-        swal.fire("Image uploaded successfully","","success");
-      }
-    );
-  }
+    
+      this.ClientService.uploadImage(this.imgSelected, this.client.id).subscribe(
+        client => {
+          this.client = client;
+          swal.fire("Image uploaded successfully","","success");
+        }
+      );
+    }
 
 }
