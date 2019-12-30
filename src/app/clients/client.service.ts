@@ -104,7 +104,7 @@ export class ClientService {
     let formData = new FormData();
     formData.append("file", file);
     formData.append("id", id);
-    return this.http.post(`${this.urlEndPoint}/upload/`, formData).pipe(
+    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
       map ((response: any) => response.client as Client),
       catchError(e => {
          swal.fire(e.error.message, e.error.preciseMessage , 'error');
