@@ -15,6 +15,7 @@ export class ClientsComponent implements OnInit {
 
   clients: Array<Client>;
   public paginator: any;
+  public selectedClient: Client;
 
   constructor(private clientService: ClientService, private activatedRoute: ActivatedRoute ) {
   
@@ -60,6 +61,10 @@ export class ClientsComponent implements OnInit {
         
       }
     });
+  }
+
+  public openModal(client: Client){
+    this.selectedClient = client;
   }
 
   
