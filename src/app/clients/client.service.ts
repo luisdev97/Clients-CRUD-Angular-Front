@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
 import Client from 'src/models/client';
 import { Observable, throwError, from } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -100,17 +100,17 @@ export class ClientService {
     );
   }
 
-  uploadImage(file: File, id): Observable<Client>{
+  uploadImage(file: File, id): Observable<HttpEvent<{}>>{
+
     let formData = new FormData();
     formData.append("file", file);
     formData.append("id", id);
-    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
-      map ((response: any) => response.client as Client),
-      catchError(e => {
-         swal.fire(e.error.message, e.error.preciseMessage , 'error');
-         return throwError(e);
-       })
-    );
+
+    const request = new HttpRequest('POST', `${this.urlEndPoint}/upload`, formData, {
+      reportProgress: true
+    });
+    
+    return this.http.request(request)
   }
 
 }

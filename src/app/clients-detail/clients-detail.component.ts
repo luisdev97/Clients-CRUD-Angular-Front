@@ -3,6 +3,8 @@ import Client from '../../models/client';
 import { ClientService } from '../clients/client.service';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { HttpEventType } from '@angular/common/http';
+
 @Component({
   selector: 'ClientDetail',
   templateUrl: './clients-detail.component.html',
@@ -13,6 +15,7 @@ export class ClientsDetailComponent implements OnInit {
   client: Client;
   title: string = "Client Detail";
   private imgSelected: File;
+  public progress: number = 0;
 
   constructor(private ClientService: ClientService, private activatedRoute: ActivatedRoute) { }
 
@@ -29,6 +32,7 @@ export class ClientsDetailComponent implements OnInit {
 
   selectImage(event){
     this.imgSelected = event.target.files[0];
+    this.progress = 0;
 
     if(this.imgSelected.type.indexOf('image') < 0)
       swal.fire('Error Upload', 'The file must be an image', 'error');
@@ -41,8 +45,16 @@ export class ClientsDetailComponent implements OnInit {
   uploadImage(){
     
       this.ClientService.uploadImage(this.imgSelected, this.client.id).subscribe(
-        client => {
-          this.client = client;
+        event => {
+          if(event.type === HttpEventType.UploadProgress){
+            this.progress = Math.round((event.loaded/event.total)*100);
+
+          }else if(event.type === HttpEventType.Response){
+            const response: any = event.body;
+            this.client = response.client as Client;
+            swal.fire(`${response.message}`, '', 'success');
+          }
+          //this.client = client;
           swal.fire("Image uploaded successfully","","success");
         }
       );
