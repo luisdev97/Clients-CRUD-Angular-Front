@@ -4,6 +4,7 @@ import { ClientService } from '../clients/client.service';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
+import { ModalService } from './modal.service';
 
 @Component({
   selector: 'ClientDetail',
@@ -17,7 +18,7 @@ export class ClientsDetailComponent implements OnInit {
   private imgSelected: File;
   public progress: number = 0;
 
-  constructor(private ClientService: ClientService, private activatedRoute: ActivatedRoute) { }
+  constructor(private ClientService: ClientService, private activatedRoute: ActivatedRoute, private modalService: ModalService) { }
 
   ngOnInit() {
     /*this.activatedRoute.paramMap.subscribe(params => {
@@ -60,4 +61,9 @@ export class ClientsDetailComponent implements OnInit {
       );
     }
 
+    public closeModal(){
+      this.modalService.closeModal();
+      this.selectImage = null;
+      this.progress = 0;
+    }
 }
