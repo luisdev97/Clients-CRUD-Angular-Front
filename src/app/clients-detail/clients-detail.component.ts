@@ -56,6 +56,7 @@ export class ClientsDetailComponent implements OnInit {
           }else if(event.type === HttpEventType.Response){
             let response: any = event.body;
             this.client = response.client as Client;
+            this.modalService.uploadNotification.emit(this.client);
             swal.fire(`${response.message}`, '', 'success');
           }
           //this.client = client;

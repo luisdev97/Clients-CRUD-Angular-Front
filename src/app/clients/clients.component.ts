@@ -33,7 +33,15 @@ export class ClientsComponent implements OnInit {
         } 
       )
     });
-
+    this.modalService.uploadNotification.subscribe(client => {
+      this.clients = this.clients.map(c => {
+        if(client.id === c.id)
+          c.img = client.img; //c es el cliente que obtenemos del emitter
+          
+          return c;
+        });
+       
+    });
   }
 
   public delete(client: Client): void {
@@ -67,7 +75,7 @@ export class ClientsComponent implements OnInit {
   public openModal(client: Client){
     this.selectedClient = client;
     this.modalService.openModal();
-  }
+  } 
 
   
 
