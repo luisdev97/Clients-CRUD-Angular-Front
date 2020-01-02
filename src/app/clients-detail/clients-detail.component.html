@@ -23,10 +23,13 @@
                     <li class="list-group-item">{{ client.createAt | date:"fullDate" }}</li>
                   </ul>
 
-                <div class="upload-btn-wrapper btn-block">
+                 <div class="upload-btn-wrapper btn-block">
                     <button class="btn btn-block">Upload a image</button>
                     <input (change)="selectImage($event)" type="file" name="imgSelected"/>
-                </div>
+                  </div>
+
+                  <button class="btn btn-success btn-block" (click)="uploadImage()">Guardar</button>
+
 
                 <div *ngIf="progress > 0" class="progress" style="height: 40px">
                   <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{ width: progress+'%' }" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">

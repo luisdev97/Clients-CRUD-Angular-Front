@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import Client from '../../models/client';
 import { ClientService } from '../clients/client.service';
-import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
 import { ModalService } from './modal.service';
@@ -18,8 +17,8 @@ export class ClientsDetailComponent implements OnInit {
   private imgSelected: File;
   public progress: number = 0;
 
-  constructor(private ClientService: ClientService, private activatedRoute: ActivatedRoute, private modalService: ModalService) { }
-
+  constructor(private ClientService: ClientService , private modalService: ModalService) { }
+   
   ngOnInit() {
     /*this.activatedRoute.paramMap.subscribe(params => {
       let id: number = +params.get('id');
@@ -32,38 +31,47 @@ export class ClientsDetailComponent implements OnInit {
   }
 
   selectImage(event){
+    
     this.imgSelected = event.target.files[0];
     this.progress = 0;
 
-    if(this.imgSelected.type.indexOf('image') < 0)
+    if(this.imgSelected.type.indexOf('image') < 0){
       swal.fire('Error Upload', 'The file must be an image', 'error');
-    else
-      this.uploadImage();
-      
+      this.imgSelected = null;
+    }  
+
   }
 
 
   uploadImage(){
-    
+
+    if(!this.imgSelected){
+      swal.fire('Error Upload', 'The file must be an image', 'error');
+    }
+    else{
       this.ClientService.uploadImage(this.imgSelected, this.client.id).subscribe(
         event => {
           if(event.type === HttpEventType.UploadProgress){
             this.progress = Math.round((event.loaded/event.total)*100);
-
           }else if(event.type === HttpEventType.Response){
-            const response: any = event.body;
+            let response: any = event.body;
             this.client = response.client as Client;
             swal.fire(`${response.message}`, '', 'success');
           }
           //this.client = client;
-          swal.fire("Image uploaded successfully","","success");
+         // swal.fire("Image uploaded successfully","","success");
         }
       );
     }
+      
+  }
+      
+  
+
 
     public closeModal(){
       this.modalService.closeModal();
-      this.selectImage = null;
+      this.imgSelected = null;
       this.progress = 0;
     }
 }
