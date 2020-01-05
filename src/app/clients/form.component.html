@@ -101,8 +101,6 @@
     
         </div>
         
-
-
         <div class="form-group row">
 
           <label for="createAt" class="col-form-label col-sm-2">Date</label>
@@ -112,12 +110,14 @@
             <input [matDatepicker]="myDatepicker" class="form-control"
             [(ngModel)]="client.createAt"
             name="createAt"
-            style="display: inline;">
+            style="display: inline; width: 300px;">
             <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #myDatepicker></mat-datepicker>
           </div>
 
-      </div>
+        </div>
+
+        
 
 
       <div class="form-group row">
@@ -125,10 +125,12 @@
         <label for="region" class="col-form-label col-sm-2">Region</label>
 
         <div class="col-sm-6">   
-          <select class="form-control"
+          <select [compareWith]="compareRegion"
+          class="form-control"
           [(ngModel)]="client.region"
           name="region"
           style="width: 500px ;">
+          <option [ngValue]="undefined"> --- Select Region --- </option>
           <option *ngFor="let region of regions" [ngValue]="region" >{{ region.name }}</option>
           </select>
         </div>

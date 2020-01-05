@@ -62,5 +62,11 @@ export class FormComponent implements OnInit {
     )
   }
 
+  public compareRegion(object1: Region, object2: Region): boolean {
+    
+    if(object1 === undefined && object2 === undefined)
+      return true;
 
+    return object1 == null || object2 == null ? false : object1.id === object2.id;
+  }
 }
