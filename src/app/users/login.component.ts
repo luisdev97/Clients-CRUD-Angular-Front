@@ -27,10 +27,14 @@ export class LoginComponent implements OnInit {
       Swal.fire('Login Error', 'Username or password are empty!', 'error');
     }else{
       this.authService.login(this.user).subscribe(res => {
-        const payload = JSON.parse(atob(res.access_token.split(".")[1]));
-        console.log(payload);
+        
+        this.authService.saveUser(res.access_token);
+        this.authService.saveToken(res.access_token);
+
+        const user = this.authService.user;
+
         this.router.navigate(['/clients']);
-        Swal.fire('Successful Authentication', `Welcome ${payload.name}`, 'success');
+        Swal.fire('Successful Authentication', `Welcome ${user.name}`, 'success');
       })
     }
     
