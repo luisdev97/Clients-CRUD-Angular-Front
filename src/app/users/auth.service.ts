@@ -97,4 +97,17 @@ export class AuthService {
     else
       return false;
   }
+
+
+  logout(): void {
+    this._token = null;
+    this._user = null;
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+  }
+
+
 }
+
+
+
