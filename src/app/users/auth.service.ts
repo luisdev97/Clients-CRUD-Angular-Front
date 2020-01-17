@@ -90,4 +90,11 @@ export class AuthService {
   }
 
 
+  isAuthenticated(): boolean{
+    let payload = this.getTokenData(this.token);
+    if(payload != null && payload.user_name && payload.user_name.length > 0 )
+      return true;
+    else
+      return false;
+  }
 }
