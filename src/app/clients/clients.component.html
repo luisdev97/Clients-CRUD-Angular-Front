@@ -6,7 +6,7 @@
     <h5 class="card-title">List of clients</h5>
 
     <div class="my-2 text-left">
-      <button
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')"
         class="btn btn-rounded btn-primary"
         [routerLink]="['/clients/form']"
       >
@@ -21,19 +21,19 @@
     <table class="table table-bordered table-striped" *ngIf="clients?.length > 0">
       <thead>
         <tr>
-          <th>Img</th>
+          <th *ngIf="authService.hasRole('ROLE_USER')">Img</th>
           <th>Name</th>
           <th>Surname</th>
           <th>Email</th>
           <th>Create At</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Edit</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Delete</th>
         </tr>
       </thead>
 
       <tbody *ngFor="let client of clients">
         <tr>
-          <td>
+          <td *ngIf="authService.hasRole('ROLE_USER')">
               <img *ngIf="client?.img" (click)="openModal(client)" src="http://localhost:9090/api/uploads/img/{{ client.img }} " alt="" class="img-thumbnail rounded" style="width: 64px; cursor: pointer">
               <img *ngIf="!client?.img" (click)="openModal(client)" src="http://localhost:9090/img/noUser.png " alt="no photo" class="img-thumbnail rounded" style="width: 64px; cursor: pointer">
           </td>
@@ -42,10 +42,10 @@
           <td>{{ client.surname | uppercase }}</td>
           <td>{{ client.email }}</td>
           <td>{{ client.createAt | date:"longDate" }}</td>
-          <td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button [routerLink]="['/clients/form', client.id]" class="btn btn-primary">Edit</button>
           </td>
-          <td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button (click)="delete(client)" class="btn btn-danger">Delete</button>
           </td>
         </tr>
