@@ -8,6 +8,7 @@ import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { Region } from '../../models/Region';
 import { AuthService } from '../users/auth.service';
+import Swal from 'sweetalert2';
 
 
 //{ providedIn: 'root' }
@@ -19,12 +20,15 @@ export class ClientService {
   
 
   private isNotAuthorized(e): boolean{
-    if(e.status == 401 || e.status == 403){
+    if(e.status == 401){
       this.router.navigate(['/login']);
       return true;
 
+    }else if(e.status == 403){
+      this.router.navigate(['/clients']);
+      Swal.fire("Denied access", "", 'warning');
+      return true;
     }
-    else
       return false;
   }
 
