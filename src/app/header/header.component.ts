@@ -20,4 +20,5 @@ export class HeaderComponent {
         Swal.fire("Logout", 'Session closed successfully', 'info');
         this.router.navigate(['/login']);
     }
+    
 } 
