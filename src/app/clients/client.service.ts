@@ -16,9 +16,7 @@ import Swal from 'sweetalert2';
 export class ClientService {
 
   private urlEndPoint: string = 'http://localhost:9090/api/clients';
-  private httpHeaders = new HttpHeaders({ 'content-Type': 'application/json' })
   
-
   private isNotAuthorized(e): boolean{
     if(e.status == 401){
 
@@ -39,6 +37,7 @@ export class ClientService {
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
+  /*
   private getHttpHeaders(){
     const token = this.authService.token;
     if(token) {
@@ -47,6 +46,7 @@ export class ClientService {
       
     return this.httpHeaders;
   }
+  /*/
 
   
   getClients(page: number = 0): Observable<any> {
@@ -71,7 +71,7 @@ export class ClientService {
 
 
   getClient(id): Observable<Client> {
-    return this.http.get<Client>(`${this.urlEndPoint}/${id}`, { headers: this.getHttpHeaders() }).pipe(
+    return this.http.get<Client>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
 
         if(this.isNotAuthorized(e)){
@@ -88,7 +88,7 @@ export class ClientService {
 
 
   create(client: Client): Observable<Client> {
-    let newClient = this.http.post<any>(this.urlEndPoint, client, { headers: this.getHttpHeaders() });
+    let newClient = this.http.post<any>(this.urlEndPoint, client);
     return newClient.pipe(
       map(response => response.client as Client), 
       catchError(e => {
@@ -109,7 +109,7 @@ export class ClientService {
 
 
   update(client: Client): Observable<Client> {
-    let updatedClient = this.http.put<any>(`${this.urlEndPoint}/${client.id}`, client, { headers: this.getHttpHeaders() });
+    let updatedClient = this.http.put<any>(`${this.urlEndPoint}/${client.id}`, client);
     return updatedClient.pipe(
       map(response => response.client as Client),
       catchError(e  => {
@@ -130,7 +130,7 @@ export class ClientService {
 
 
   delete(id: number): Observable<Client>{
-    let removedClient = this.http.delete<Client>(`${this.urlEndPoint}/${id}`, { headers: this.getHttpHeaders() });
+    let removedClient = this.http.delete<Client>(`${this.urlEndPoint}/${id}`);
     return removedClient.pipe(
       catchError(e => {
 
@@ -152,14 +152,8 @@ export class ClientService {
     formData.append("file", file);
     formData.append("id", id); 
 
-    let httpHeaders =  new HttpHeaders();
-    const token = this.authService.token;
-    if(token)
-      httpHeaders = httpHeaders.append("Authorization","Bearer " + token);
-
     const request = new HttpRequest('POST', `${this.urlEndPoint}/upload`, formData, {
-      reportProgress: true,
-      headers: httpHeaders
+      reportProgress: true
     });
     
     return this.http.request(request).pipe(
@@ -173,7 +167,7 @@ export class ClientService {
 
 
   getRegions(): Observable<Region[]>{
-    return this.http.get<Region[]>(this.urlEndPoint + '/regions', { headers: this.getHttpHeaders() }).pipe(
+    return this.http.get<Region[]>(this.urlEndPoint + '/regions').pipe(
       catchError(e => {
         this.isNotAuthorized(e);
         return throwError(e);

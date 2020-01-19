@@ -6,7 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ClientService } from './clients/client.service';
 import { RouterModule , Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormComponent } from './clients/form.component';
 import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
@@ -20,6 +20,7 @@ import { ClientsDetailComponent } from './clients-detail/clients-detail.componen
 import { LoginComponent } from './users/login.component';
 import { AuthGuard } from './users/guards/auth.guard';
 import { RoleGuard } from './users/guards/role.guard';
+import { tokenInterceptor } from './users/interceptors/token.interceptor';
 
 registerLocaleData(localeEn, 'en');
 
@@ -52,7 +53,7 @@ const routes: Routes = [
     FormsModule,
     BrowserAnimationsModule, MatDatepickerModule, MatMomentDateModule
   ],
-  providers: [ClientService],
-  bootstrap: [AppComponent]
+  providers: [ClientService, { provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true }],
+  bootstrap: [AppComponent] 
 })
 export class AppModule { }
