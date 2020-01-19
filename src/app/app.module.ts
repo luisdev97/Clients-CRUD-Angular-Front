@@ -18,7 +18,8 @@ import { MatDatepickerModule } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { ClientsDetailComponent } from './clients-detail/clients-detail.component';
 import { LoginComponent } from './users/login.component';
-import { AuthGuard } from './users/grs/guards/auth.guard';
+import { AuthGuard } from './users/guards/auth.guard';
+import { RoleGuard } from './users/guards/role.guard';
 
 registerLocaleData(localeEn, 'en');
 
@@ -27,8 +28,8 @@ const routes: Routes = [
   { path: 'home' , redirectTo: '/clients' , pathMatch: 'full' },
   { path: 'clients', component: ClientsComponent },
   { path: 'clients/page/:page', component: ClientsComponent },
-  { path: 'clients/form', component: FormComponent, canActivate: [AuthGuard]},
-  { path: 'clients/form/:id', component: FormComponent, canActivate: [AuthGuard] },
+  { path: 'clients/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}},
+  { path: 'clients/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}},
   { path: 'login', component: LoginComponent },
 ];
 
