@@ -17,10 +17,30 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
     if(this.authService.isAuthenticated()){
+
+      if(this.isTokenExpired()){
+        this.authService.logout();
+        this.router.navigate(['/login']);
+        return false;
+      }
+      
       return true;
     }
 
     this.router.navigate(['/login']);
+    return false;
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.authService.token;
+    const payload = this.authService.getTokenData(token);
+    //obtien la fecha actual en ms y la pasa a segundos
+    const now = new Date().getTime() / 1000;
+
+    if(payload.exp < now){
+      return true;
+    }
+
     return false;
   }
   
