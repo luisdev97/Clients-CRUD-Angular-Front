@@ -21,6 +21,7 @@ import { LoginComponent } from './users/login.component';
 import { AuthGuard } from './users/guards/auth.guard';
 import { RoleGuard } from './users/guards/role.guard';
 import { tokenInterceptor } from './users/interceptors/token.interceptor';
+import { AuthInterceptor } from  './users/interceptors/auth.interceptor';
 
 registerLocaleData(localeEn, 'en');
 
@@ -53,7 +54,9 @@ const routes: Routes = [
     FormsModule,
     BrowserAnimationsModule, MatDatepickerModule, MatMomentDateModule
   ],
-  providers: [ClientService, { provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true }],
+  providers: [ClientService, 
+    { provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent] 
 })
 export class AppModule { }
