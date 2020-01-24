@@ -1,4 +1,5 @@
 import { Region } from './Region';
+import { Bill } from './bill';
 
 class Client {
     id: number;
@@ -8,6 +9,7 @@ class Client {
     email: string;
     img: string;
     region: Region;
+    bills: Array<Bill> = [];
 }
 
 export default Client;
