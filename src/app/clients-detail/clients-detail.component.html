@@ -12,6 +12,7 @@
         
 
         <div class="container">
+
           <div class="row">
 
             <div class="col-sm">
@@ -45,6 +46,42 @@
             </div>
           
           </div>
+
+
+            
+          <div class="row">
+
+              <div *ngIf="client.bills.length == 0" class="alert alert-info my-4">
+                  This client has no bills
+              </div>
+
+              <table *ngIf="client.bills.length > 0" class="table table-bordered table-striped my-4">
+             
+                  <thead>
+                    <tr>
+                        <th>Bill</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                    
+                  </thead>
+    
+                  
+                  <tbody>
+                     <tr *ngFor="let bill of client.bills">
+                        <td>{{ bill.id }}</td>
+                        <td>{{ bill.description }}</td>
+                        <td>{{ bill.createAt }}</td>
+                        <td>{{ bill.total }}</td>
+                     </tr>
+                  </tbody>
+    
+                </table>
+                 
+          </div>
+
+
         </div>
 
 
