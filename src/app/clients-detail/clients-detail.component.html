@@ -63,6 +63,7 @@
                         <th>Description</th>
                         <th>Date</th>
                         <th>Amount</th>
+                        <th>Detail</th>
                     </tr>
                     
                   </thead>
@@ -74,6 +75,11 @@
                         <td>{{ bill.description }}</td>
                         <td>{{ bill.createAt }}</td>
                         <td>{{ bill.total }}</td>
+                        <td>
+                          <button class="btn btn-primary btn-sm" [routerLink]="['/bills/', bill.id]">
+                            Show
+                          </button>
+                        </td>
                      </tr>
                   </tbody>
     
