@@ -6,15 +6,16 @@ import { Bill } from 'src/models/bill';
 @Injectable({
   providedIn: 'root'
 })
-export class BillsService {
+export class BillService {
 
-  private urlEndPoint: string = "htpp://localhost:9090/api/bills";
+  private urlEndPoint: string = "http://localhost:9090/api/bills";
 
   constructor(private http: HttpClient) { 
   
   }
 
   getBill(id: number): Observable<Bill>{
+    console.log(this.urlEndPoint + "/" + id);
     return this.http.get<Bill>(`${this.urlEndPoint}/${id}`);
   }
 }
