@@ -18,6 +18,46 @@
         <li class="list-group-item">Description: {{ bill.description}}</li>
         <li class="list-group-item">Date: {{ bill.createAt }}</li>
     </ul>
+
+    <table class="table table-striped table-hover table-bordered my-3">
+        
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Cantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of bill.items">
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price }}</td>
+                <td>{{ item.cantity }}</td>
+                <td>{{ item.amount }}</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <h5 class="float-right">
+        <span>Grand total</span>: <span class="badge badge-secundary">{{ bill.total }}</span>
+    </h5>
+
+    <div class="card border-info mb-4" style="max-width: 350px">
+
+        <div class="card card-header">
+            Observations
+        </div>
+
+        <div class="card-card-body">
+             <p *ngIf="bill.observation">{{ bill.observation }}</p>
+             <p *ngIf="!bill.observation">The bill has no observation</p>
+        </div>
+
+    </div>
+
   
 </div>
 </div>
