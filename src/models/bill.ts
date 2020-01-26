@@ -8,7 +8,7 @@ export class Bill {
     private items: Array<ItemBill> = [];
     private total: number;
     private createAt: string;
-    private client: Client;
+    private _client: Client;
 
     public get description(): string{
         return this._description;
@@ -16,5 +16,13 @@ export class Bill {
 
     public get id(): number{
         return this._id;
+    }
+
+    public get client():Client {
+        return this._client;
+    }
+
+    public set client(client: Client){
+        this._client = client;
     }
 }

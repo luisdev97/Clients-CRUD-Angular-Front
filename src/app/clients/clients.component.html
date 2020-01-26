@@ -22,11 +22,12 @@
       <thead>
         <tr>
           <!-- *ngIf="authService.hasRole('ROLE_USER')" -->
-          <th >Img</th>
+          <th>Img</th>
           <th>Name</th>
           <th>Surname</th>
           <th>Email</th>
-          <th>Create At</th>
+          <th>Date</th>
+          <th>Create Bill</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Edit</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Delete</th>
         </tr>
@@ -44,6 +45,11 @@
           <td>{{ client.surname | uppercase }}</td>
           <td>{{ client.email }}</td>
           <td>{{ client.createAt | date:"longDate" }}</td>
+          <td>
+            <button [routerLink]="['/bills/form', client.id]" class="btn btn-success btn-sm">
+              Create Bill
+            </button>
+          </td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button [routerLink]="['/clients/form', client.id]" class="btn btn-primary">Edit</button>
           </td>

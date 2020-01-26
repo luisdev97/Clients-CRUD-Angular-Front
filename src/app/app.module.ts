@@ -23,6 +23,7 @@ import { RoleGuard } from './users/guards/role.guard';
 import { tokenInterceptor } from './users/interceptors/token.interceptor';
 import { AuthInterceptor } from  './users/interceptors/auth.interceptor';
 import { BillDetailComponent } from './bills/bill-detail.component';
+import { BillsComponent } from './bills/bills.component';
 
 registerLocaleData(localeEn, 'en');
 
@@ -34,7 +35,8 @@ const routes: Routes = [
   { path: 'clients/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}},
   { path: 'clients/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}},
   { path: 'login', component: LoginComponent },
-  { path: 'bills/:id', component: BillDetailComponent}
+  { path: 'bills/:id', component: BillDetailComponent},
+  { path: 'bills/form/:clientId', component: BillsComponent}
 ];
 
 
@@ -48,7 +50,8 @@ const routes: Routes = [
     PaginatorComponent,
     ClientsDetailComponent,
     LoginComponent,
-    BillDetailComponent
+    BillDetailComponent,
+    BillsComponent
   ],
   imports: [
     BrowserModule,

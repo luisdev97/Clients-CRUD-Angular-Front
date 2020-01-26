@@ -1,0 +1,59 @@
+<div class="card bg-light">
+  <div class="card-header">{{ title }}</div>
+
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/clients']" class="btn btn-light btn-xs"
+        >&laquo; Go back
+      </a>
+    </h4>
+
+    <form>
+      <div class="form-group row" *ngIf="bill.client">
+        <label for="client" class="col-sm-2 col-form-label">Client</label>
+        <div class="col-sm-6">
+          <input
+            type="text"
+            name="client"
+            value="{{ bill.client.name }} {{ bill.client.surname }}"
+            class="form-control"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">
+          Description
+        </label>
+        <div class="col-sm-6">
+          <input
+            type="text"
+            name="description"
+            [(ngModel)]="bill.description"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="observation" class="col-sm-2 col-form-label"
+          >Observation</label
+        >
+        <div class="col-sm-6">
+          <textarea
+            name="observation"
+            [(ngModel)]="bill.observation"
+            class="form-control"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <input type="submit" value="Create Bill" class="btn btn-secondary" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
