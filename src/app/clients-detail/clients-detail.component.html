@@ -64,6 +64,7 @@
                         <th>Date</th>
                         <th>Amount</th>
                         <th>Detail</th>
+                        <th>Delete</th>
                     </tr>
                     
                   </thead>
@@ -76,8 +77,13 @@
                         <td>{{ bill.createAt }}</td>
                         <td>{{ bill.total }}</td>
                         <td>
-                          <button class="btn btn-primary btn-sm" [routerLink]="['/bills/', bill.id]">
+                          <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/bills/', bill.id]">
                             Show
+                          </button>
+                        </td>
+                        <td>
+                          <button class="btn btn-danger btn-sm" (click)="deleteBill(bill)">
+                            Delete
                           </button>
                         </td>
                      </tr>

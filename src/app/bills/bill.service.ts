@@ -18,4 +18,9 @@ export class BillService {
     console.log(this.urlEndPoint + "/" + id);
     return this.http.get<Bill>(`${this.urlEndPoint}/${id}`);
   }
+
+  delete(id: number): Observable<void>{
+    return this.http.delete<void>(`${this.urlEndPoint}/${id}`);
+  }
+  
 }

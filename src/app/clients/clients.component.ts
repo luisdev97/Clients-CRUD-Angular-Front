@@ -63,7 +63,7 @@ export class ClientsComponent implements OnInit {
             this.clients = this.clients.filter(c => c !== client);
             swal.fire(
               'Client Deleted!',
-              `Client ${name} successfully created`,
+              `Client ${name} successfully deleted`,
               'success'
             );
           }
