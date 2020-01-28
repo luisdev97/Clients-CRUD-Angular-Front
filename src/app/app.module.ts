@@ -8,7 +8,7 @@ import { ClientService } from './clients/client.service';
 import { RouterModule , Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormComponent } from './clients/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import { PaginatorComponent } from './paginator/paginator.component';
@@ -24,6 +24,12 @@ import { tokenInterceptor } from './users/interceptors/token.interceptor';
 import { AuthInterceptor } from  './users/interceptors/auth.interceptor';
 import { BillDetailComponent } from './bills/bill-detail.component';
 import { BillsComponent } from './bills/bills.component';
+
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+
+
 
 registerLocaleData(localeEn, 'en');
 
@@ -58,7 +64,10 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    BrowserAnimationsModule, MatDatepickerModule, MatMomentDateModule
+    BrowserAnimationsModule, MatDatepickerModule, MatMomentDateModule,
+    ReactiveFormsModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule
+
+
   ],
   providers: [ClientService, 
     { provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true },
