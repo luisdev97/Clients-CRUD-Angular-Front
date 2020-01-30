@@ -51,12 +51,12 @@
 
       <div class="form-group">
           <div class="col-sm-6">
-              <mat-form-field class="example-full-width">
-                  <input type="text" placeholder="Add product" aria-label="Number" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
+              <mat-form-field>
+                  <input type="text" placeholder="Add product" aria-label="Products" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="showName">
                     <!-- Para iterar un observable en lugar de una lista usamos el pipe async -->
                     <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
-                      {{ product }}
+                      {{ product.name }}
                     </mat-option>
                   </mat-autocomplete>
               </mat-form-field>

@@ -4,9 +4,11 @@ import { ClientService } from '../clients/client.service';
 import { ActivatedRoute } from '@angular/router';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {map, flatMap} from 'rxjs/operators';
 
 import Client from 'src/models/client';
+import { BillService } from './bill.service';
+import { Product } from 'src/models/product';
 
 @Component({
   selector: 'app-bills',
@@ -20,9 +22,9 @@ export class BillsComponent implements OnInit {
 
   autoCompleteControl = new FormControl();
   products: string[] = ['Table', 'Chair', 'Lamp','Long Skate'];
-  filteredProducts: Observable<string[]>;
+  filteredProducts: Observable<Product[]>;
 
-  constructor(private clientService: ClientService, private activatedRoute: ActivatedRoute) {
+  constructor(private clientService: ClientService, private activatedRoute: ActivatedRoute, private billService: BillService) {
 
   }
 
@@ -34,20 +36,26 @@ export class BillsComponent implements OnInit {
       });
     });
 
+    //Observable<String>
     this.filteredProducts = this.autoCompleteControl.valueChanges
       .pipe(
-        startWith(''),
-        map(value => this._filter(value))
+        map(value => typeof value === 'string' ? value : value.name),
+        flatMap(value => value ? this._filter(value) : [])
       );
   }
 
 
-  
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.products.filter(option => option.toLowerCase().includes(filterValue));
+  showName(product?: Product): string | undefined{
+    return product ? product.name : undefined
   }
+
+  
+  private _filter(value: string): Observable<Product[]> {
+    const filterValue = value.toLowerCase();
+    return this.billService.filterProducts(filterValue);
+  }
+
+
 
 
 

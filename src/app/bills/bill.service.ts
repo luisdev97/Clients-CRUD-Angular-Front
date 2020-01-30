@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Bill } from 'src/models/bill';
+import { Product } from 'src/models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class BillService {
 
   delete(id: number): Observable<void>{
     return this.http.delete<void>(`${this.urlEndPoint}/${id}`);
+  }
+
+  filterProducts(term: string): Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.urlEndPoint}/filter-products/${term}`);
   }
   
 }
