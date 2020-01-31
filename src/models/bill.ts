@@ -5,7 +5,7 @@ export class Bill {
     private _id: number;
     private _description: string;
     private observation: string;
-    private items: Array<ItemBill> = [];
+    private _items: Array<ItemBill> = [];
     private total: number;
     private createAt: string;
     private _client: Client;
@@ -24,5 +24,13 @@ export class Bill {
 
     public set client(client: Client){
         this._client = client;
+    }
+
+    public get items(): ItemBill[]{
+        return this._items;
+    }
+
+    public set items(items: ItemBill[]){
+        this._items = items;
     }
 }

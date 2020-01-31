@@ -5,10 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, flatMap} from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 import Client from 'src/models/client';
 import { BillService } from './bill.service';
 import { Product } from 'src/models/product';
+import { ItemBill } from 'src/models/item-bill';
 
 @Component({
   selector: 'app-bills',
@@ -55,6 +57,17 @@ export class BillsComponent implements OnInit {
     return this.billService.filterProducts(filterValue);
   }
 
+
+  selectProduct(event: MatAutocompleteSelectedEvent): void{
+    const product = event.option.value as Product;
+    let newItem = new ItemBill();
+    newItem.product = product;
+    this.bill.items.push(newItem);
+    this.autoCompleteControl.setValue('');
+    event.option.focus();
+    event.option.deselect();
+
+  }
 
 
 
