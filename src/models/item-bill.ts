@@ -17,6 +17,10 @@ export class ItemBill {
         return this._cantity;
     }
 
+    public set cantity(cantity: number){
+        this._cantity = cantity;
+    }
+
     public calcAmount(): number  {
         return this._cantity * this._product.price;
     }

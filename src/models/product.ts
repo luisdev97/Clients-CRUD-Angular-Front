@@ -1,8 +1,12 @@
 export class Product {
-    private id: number;
+    private _id: number;
     private _name: string;
     private _cantity: number; 
     private _price: number;
+
+    public get id(){
+        return this._id;
+    }
 
     public get name(){
         return this._name;
