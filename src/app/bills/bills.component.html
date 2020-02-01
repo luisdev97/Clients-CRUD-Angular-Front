@@ -74,6 +74,7 @@
               <th>Price</th>
               <th>quantity</th>
               <th>Total</th>
+              <th>Delete</th>
             </tr>
           <tbody>
             <tr *ngFor="let item of bill.items">
@@ -81,6 +82,7 @@
               <td>{{ item.product.price }}</td>
               <td><input type="number" value="{{ item.quantity }}" (change)="updatequantity(item.product.id, $event)"></td>
               <td>{{ item.calcAmount() }}</td>
+              <td><button class="bt btn-danger btn-sm" type="button" (click)="deleteBill(item.product.id)">X</button></td>
             </tr>
           </tbody>
        </table>

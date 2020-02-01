@@ -75,6 +75,10 @@ export class BillsComponent implements OnInit {
   updatequantity(id: number, event: any): void {
     const quantity: number = event.target.value as number;
 
+    if(quantity == 0 ){
+      return this.deleteBill(id);
+    }
+
     this.bill.items = this.bill.items.map((item: ItemBill) => {
       if (item.product.id === id) {
         item.quantity = quantity;
@@ -110,6 +114,10 @@ export class BillsComponent implements OnInit {
     newItem.product = product;
     this.bill.items.push(newItem);
    
+  }
+
+  deleteBill(id: number): void{
+    this.bill.items = this.bill.items.filter(item => item.product.id !== id);
   }
 
 
