@@ -33,4 +33,23 @@ export class Bill {
     public set items(items: ItemBill[]){
         this._items = items;
     }
+
+
+    /**
+     * Getter $total
+     * @return {number}
+     */
+	public get $total(): number {
+		return this.total;
+	}
+
+
+    calculateGrantTotal(): number{
+        this.total = 0;
+        this.items.forEach((item: ItemBill) => {
+            this.total = this.total + item.calcAmount();
+        });
+        return this.total;
+    }
+    
 }

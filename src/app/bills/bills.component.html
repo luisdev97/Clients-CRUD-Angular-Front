@@ -63,8 +63,11 @@
           </div>
        </div>
 
-      
-       <table class="table table-striped table-hover table-sm">
+       <div *ngIf="bill.items.length == 0" class="alert alert-info my-4">  
+          There are no products added to the bill
+       </div>
+
+       <table class="table table-striped table-hover table-sm" *ngIf="bill.items.length > 0">
           
         <thead>
 
@@ -77,6 +80,7 @@
               <th>Delete</th>
             </tr>
           <tbody>
+
             <tr *ngFor="let item of bill.items">
               <td>{{ item.product.name }}</td>
               <td>{{ item.product.price }}</td>
@@ -86,6 +90,8 @@
             </tr>
           </tbody>
        </table>
+
+       <h5 class="float-right" *ngIf="bill.items.length > 0">Grant total: <span class="badge badge-secondary">{{ bill.calculateGrantTotal() }} </span></h5>
 
 
 
