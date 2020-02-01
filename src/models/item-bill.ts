@@ -2,7 +2,7 @@ import { Product } from './product';
 
 export class ItemBill {
     private _product: Product;
-    private _cantity: number = 1;
+    private _quantity: number = 1;
     private _amount: number;
 
     public get product(){
@@ -13,15 +13,15 @@ export class ItemBill {
         this._product = product;
     }
 
-    public get cantity(){
-        return this._cantity;
+    public get quantity(){
+        return this._quantity;
     }
 
-    public set cantity(cantity: number){
-        this._cantity = cantity;
+    public set quantity(quantity: number){
+        this._quantity = quantity;
     }
 
     public calcAmount(): number  {
-        return this._cantity * this._product.price;
+        return this._quantity * this._product.price;
     }
 }

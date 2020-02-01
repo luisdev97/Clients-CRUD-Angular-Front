@@ -1,7 +1,7 @@
 export class Product {
     private _id: number;
     private _name: string;
-    private _cantity: number; 
+    private _quantity: number; 
     private _price: number;
 
     public get id(){
@@ -12,8 +12,8 @@ export class Product {
         return this._name;
     }
 
-    public get cantity(){
-        return this._cantity;
+    public get quantity(){
+        return this._quantity;
     }
 
     public get price(){
@@ -24,7 +24,7 @@ export class Product {
         this._name = name;
     }
 
-    public set cantity(cantity: number){
+    public set quantity(quantity: number){
         this._name = name;
     }
 

@@ -60,25 +60,57 @@ export class BillsComponent implements OnInit {
 
   selectProduct(event: MatAutocompleteSelectedEvent): void {
     const product = event.option.value as Product;
-    let newItem = new ItemBill();
-    newItem.product = product;
-    this.bill.items.push(newItem);
+
+    if(this.itemExist(product.id)){
+      this.incrementquantity(product.id);
+    }else{
+      this.addNewProduct(product);
+    }
+
     this.autoCompleteControl.setValue('');
     event.option.focus();
     event.option.deselect();
   }
 
-  updateCantity(id: number, event: any): void {
-    const cantity: number = event.target.value as number;
+  updatequantity(id: number, event: any): void {
+    const quantity: number = event.target.value as number;
 
     this.bill.items = this.bill.items.map((item: ItemBill) => {
       if (item.product.id === id) {
-        item.cantity = cantity;
+        item.quantity = quantity;
       }
       return item;
-    })
+    });
   }
 
+  itemExist(id: number): boolean{
+    let exist = false;
+
+    this.bill.items.forEach(item => {
+      if(item.product.id === id){
+        exist = true;
+      }
+    });
+    return exist;
+  }
+
+  incrementquantity(id: number): void {
+
+    this.bill.items = this.bill.items.map((item: ItemBill) => {
+      if (item.product.id === id) {
+        ++item.quantity;
+      }
+      return item;
+    });
+
+  }
+
+  addNewProduct(product: Product){
+    let newItem = new ItemBill();
+    newItem.product = product;
+    this.bill.items.push(newItem);
+   
+  }
 
 
 
