@@ -16,7 +16,6 @@ export class BillService {
   }
 
   getBill(id: number): Observable<Bill>{
-    console.log(this.urlEndPoint + "/" + id);
     return this.http.get<Bill>(`${this.urlEndPoint}/${id}`);
   }
 
@@ -26,6 +25,11 @@ export class BillService {
 
   filterProducts(term: string): Observable<Product[]>{
     return this.http.get<Product[]>(`${this.urlEndPoint}/filter-products/${term}`);
+  }
+
+
+  createBill(bill: Bill): Observable<Bill>{
+    return this.http.post<Bill>(this.urlEndPoint, bill);
   }
   
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Bill } from 'src/models/bill';
 import { ClientService } from '../clients/client.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import Client from 'src/models/client';
 import { BillService } from './bill.service';
 import { Product } from 'src/models/product';
 import { ItemBill } from 'src/models/item-bill';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-bills',
@@ -26,7 +27,7 @@ export class BillsComponent implements OnInit {
   products: string[] = ['Table', 'Chair', 'Lamp', 'Long Skate'];
   filteredProducts: Observable<Product[]>;
 
-  constructor(private clientService: ClientService, private activatedRoute: ActivatedRoute, private billService: BillService) {
+  constructor(private clientService: ClientService, private activatedRoute: ActivatedRoute, private billService: BillService, private router: Router) {
 
   }
 
@@ -121,6 +122,15 @@ export class BillsComponent implements OnInit {
   }
 
 
-
+  createBill(): void{
+    console.log('se creara una factura:');
+    console.log(this.bill);
+    this.billService.createBill(this.bill).subscribe(bill => {
+      console.log("bill",bill);
+      Swal.fire(this.title, `Bill: ${bill.description} created successfully`,"success");
+    });
+    this.router.navigate(['/clients']);
+    
+  }
 
 }
