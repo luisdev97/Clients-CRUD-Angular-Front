@@ -8,7 +8,7 @@
       </a>
     </h4>
 
-    <form>
+    <form #billForm="ngForm">
       <div class="form-group row" *ngIf="bill.client">
         <label for="client" class="col-sm-2 col-form-label">Client</label>
         <div class="col-sm-6">
@@ -32,7 +32,12 @@
             name="description"
             [(ngModel)]="bill.description"
             class="form-control"
+            required
+            #description="ngModel"
           />
+          <div class="alert alert-danger" *ngIf="description.invalid && description.touched">
+            The description is required
+          </div>
         </div>
       </div>
 
@@ -97,7 +102,7 @@
 
       <div class="form-group row">
         <div class="col-sm-6">
-          <input type="submit" (click)="createBill()" value="Create Bill" class="btn btn-secondary" />
+          <input type="submit" (click)="createBill()" value="Create Bill" class="btn btn-secondary" [disabled]="billForm.form.invalid || bill.items.length == 0"/>
         </div>
       </div>
     </form>
