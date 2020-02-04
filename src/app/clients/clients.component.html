@@ -22,12 +22,12 @@
       <thead>
         <tr>
           <!-- *ngIf="authService.hasRole('ROLE_USER')" -->
-          <th>Img</th>
+          <th *ngIf="authService.hasRole('ROLE_USER')">Img</th>
           <th>Name</th>
           <th>Surname</th>
           <th>Email</th>
           <th>Date</th>
-          <th>Create Bill</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Create Bill</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Edit</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Delete</th>
         </tr>
@@ -36,7 +36,7 @@
       <tbody *ngFor="let client of clients">
         <tr>
           <!-- *ngIf="authService.hasRole('ROLE_USER')" -->
-          <td>
+          <td *ngIf="authService.hasRole('ROLE_USER')">
               <img *ngIf="client?.img" (click)="openModal(client)" src="http://localhost:9090/api/uploads/img/{{ client.img }} " alt="" class="img-thumbnail rounded" style="width: 64px; cursor: pointer">
               <img *ngIf="!client?.img" (click)="openModal(client)" src="http://localhost:9090/img/noUser.png " alt="no photo" class="img-thumbnail rounded" style="width: 64px; cursor: pointer">
           </td>
@@ -45,7 +45,7 @@
           <td>{{ client.surname | uppercase }}</td>
           <td>{{ client.email }}</td>
           <td>{{ client.createAt | date:"longDate" }}</td>
-          <td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button [routerLink]="['/bills/form', client.id]" class="btn btn-success btn-sm">
               Create Bill
             </button>

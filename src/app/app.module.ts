@@ -41,8 +41,8 @@ const routes: Routes = [
   { path: 'clients/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}},
   { path: 'clients/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}},
   { path: 'login', component: LoginComponent },
-  { path: 'bills/:id', component: BillDetailComponent},
-  { path: 'bills/form/:clientId', component: BillsComponent}
+  { path: 'bills/:id', component: BillDetailComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_USER'}},
+  { path: 'bills/form/:clientId', component: BillsComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN'}}
 ];
 
 

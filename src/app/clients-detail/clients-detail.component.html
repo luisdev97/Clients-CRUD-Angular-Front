@@ -47,10 +47,13 @@
           
           </div>
 
-          <div class="row">
-            <button [routerLink]="['/bills/form', client.id]" class="btn btn-success btn-sm">
-                Create Bill
-            </button>
+          <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="row">
+            <div class="col-6 mt-3">
+                <button [routerLink]="['/bills/form', client.id]" class="btn btn-success btn-sm btn-block">
+                  Create Bill
+                </button>
+            </div>
+            
           </div>
             
           <div class="row">
@@ -67,8 +70,8 @@
                         <th>Description</th>
                         <th>Date</th>
                         <th>Amount</th>
-                        <th>Detail</th>
-                        <th>Delete</th>
+                        <th *ngIf="authService.hasRole('ROLE_USER')">Detail</th>
+                        <th *ngIf="authService.hasRole('ROLE_ADMIN')">Delete</th>
                     </tr>
                     
                   </thead>
@@ -85,7 +88,7 @@
                             Show
                           </button>
                         </td>
-                        <td>
+                        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
                           <button class="btn btn-danger btn-sm" (click)="deleteBill(bill)">
                             Delete
                           </button>
